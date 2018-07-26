@@ -12,12 +12,16 @@ import {
 	Message
 } from 'semantic-ui-react';
 
+import { UserRoleEnum } from 'enums/userRole';
+
 const BLANK = '';
+
 const initialState = {
 	firstName: BLANK,
 	lastName: BLANK,
 	email: BLANK,
-	phone: BLANK
+	phone: BLANK,
+	userRole: UserRoleEnum.regular
 };
 
 class UserFrom extends Component {
@@ -34,7 +38,9 @@ class UserFrom extends Component {
 		if (!nextProps.fetchingUser && !isEmpty(nextUserPrefill)) {
 			this.setState({
 				...nextUserPrefill,
-				userRole: nextUserPrefill.isAdmin ? 'admin' : 'regular'
+				userRole: nextUserPrefill.isAdmin
+					? UserRoleEnum.admin
+					: UserRoleEnum.regular
 			});
 		}
 	}
@@ -93,7 +99,7 @@ class UserFrom extends Component {
 		} else {
 			const newUser = {
 				...omit(this.state, ['error']),
-				isAdmin: this.state.userRole === 'admin'
+				isAdmin: this.state.userRole === UserRoleEnum.admin
 			};
 			onFormSubmit({ ...newUser });
 		}
@@ -165,18 +171,18 @@ class UserFrom extends Component {
 							radio
 							label={`Regular - Can't delete members`}
 							name={'userRole'}
-							value={'regular'}
-							checked={userRole === 'regular'}
+							value={UserRoleEnum.regular}
+							checked={userRole === UserRoleEnum.regular}
 							onChange={this.handleChange}
 						/>
 					</Form.Field>
 					<Form.Field>
 						<Checkbox
 							radio
-							label="Admin - Can delete members"
+							label={'Admin - Can delete members'}
 							name={'userRole'}
-							value={'admin'}
-							checked={userRole === 'admin'}
+							value={UserRoleEnum.admin}
+							checked={userRole === UserRoleEnum.admin}
 							onChange={this.handleChange}
 						/>
 					</Form.Field>

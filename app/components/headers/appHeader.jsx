@@ -6,7 +6,7 @@ class AppHeader extends Component {
 		return (
 			<Menu inverted fixed={'top'}>
 				<Container>
-					<Menu.Item header>TeamApp</Menu.Item>
+					<Menu.Item header>Team Management</Menu.Item>
 				</Container>
 			</Menu>
 		);
