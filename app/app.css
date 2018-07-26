@@ -1,0 +1,91 @@
+/*=================================
+=            overrides            =
+=================================*/
+
+/* removing gutters in columns */
+.ui.grid > .column:not(.row),
+.ui.grid > .row > .column {
+	padding: 0;
+}
+
+a,
+a:hover {
+	color: inherit;
+}
+
+a.actionIcon {
+	width: 1rem;
+	height: auto;
+}
+
+a.actionIcon .icon {
+	line-height: normal;
+	width: auto;
+	margin: 0;
+}
+
+.userListItem .ui.grid {
+	margin: 0;
+}
+
+/*=====  End of overrides  ======*/
+
+/*==============================
+=            custom            =
+==============================*/
+
+#root {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #f7f7f7;
+}
+
+.helper.rightAligned {
+	text-align: right;
+}
+
+.ui.container.mobileContainer,
+.sectionHeader,
+.userList,
+.mobileContainer .content,
+.mobileContainer .content .section {
+	display: flex;
+	flex-direction: column;
+}
+
+.sectionHeader {
+	flex: 0 0 auto;
+}
+
+.userList {
+	overflow-y: auto;
+}
+
+.ui.container.mobileContainer {
+	width: 375px;
+	height: 812px;
+	background-color: white;
+	box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1),
+		0 5px 15px rgba(0, 0, 0, 0.07);
+	border-radius: 5px;
+	padding: 1rem 1.8rem;
+}
+
+.mobileContainer .content,
+.mobileContainer .content .section {
+	flex: 10 0 auto;
+}
+
+.mobileContainer .content .btnFooter {
+	display: flex;
+	justify-content: space-between;
+}
+
+.mobileContainer .content .btnFooter.pushRight {
+	justify-content: flex-end;
+}
+
+/*=====  End of custom  ======*/
