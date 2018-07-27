@@ -14,36 +14,8 @@ import {
 
 import { UserRoleEnum } from 'enums/userRole';
 
-const BLANK = '';
-
-const initialState = {
-	firstName: BLANK,
-	lastName: BLANK,
-	email: BLANK,
-	phone: BLANK,
-	userRole: UserRoleEnum.regular
-};
-
 class UserFrom extends Component {
-	constructor(props) {
-		super(props);
-
-		this.state = { ...initialState };
-	}
-
 	timerCounter = 0;
-
-	componentWillReceiveProps(nextProps) {
-		const { userPrefill: nextUserPrefill } = nextProps;
-		if (!nextProps.fetchingUser && !isEmpty(nextUserPrefill)) {
-			this.setState({
-				...nextUserPrefill,
-				userRole: nextUserPrefill.isAdmin
-					? UserRoleEnum.admin
-					: UserRoleEnum.regular
-			});
-		}
-	}
 
 	componentWillUnmount() {
 		if (this.timerCounter) {
@@ -60,8 +32,9 @@ class UserFrom extends Component {
 	};
 
 	clearErrorMessage = () => {
+		const { onFieldChange } = this.props;
 		this.timerCounter = setTimeout(() => {
-			this.setState({ error: undefined });
+			onFieldChange({ error: undefined });
 		}, 4000);
 	};
 
@@ -84,22 +57,22 @@ class UserFrom extends Component {
 	};
 
 	handleChange = (e, { name, value }) => {
-		this.setState({ [name]: value });
+		const { onFieldChange } = this.props;
+		onFieldChange({ [name]: value });
 	};
 
 	handleFormSubmit = () => {
-		const { onFormSubmit } = this.props;
-		const currentError = this.validateFields(this.state);
+		const { onFormSubmit, userFromData, onFieldChange } = this.props;
+		const currentError = this.validateFields(userFromData);
 		const hasError = !!currentError;
 
 		if (hasError) {
-			this.setState({ error: currentError }, () => {
-				this.clearErrorMessage();
-			});
+			onFieldChange({ error: currentError });
+			this.clearErrorMessage();
 		} else {
 			const newUser = {
-				...omit(this.state, ['error']),
-				isAdmin: this.state.userRole === UserRoleEnum.admin
+				...omit(userFromData, ['error']),
+				isAdmin: userFromData.userRole === UserRoleEnum.admin
 			};
 			onFormSubmit({ ...newUser });
 		}
@@ -107,16 +80,18 @@ class UserFrom extends Component {
 
 	render() {
 		const {
-			firstName,
-			lastName,
-			email,
-			phone,
-			userRole,
+			userFromData: {
+				firstName,
+				lastName,
+				email,
+				phone,
+				userRole,
+				error
+			},
 			fetchingUser,
-			error
-		} = this.state;
-
-		const { isEditMode, onDeleteClick } = this.props;
+			isEditMode,
+			onDeleteClick
+		} = this.props;
 
 		if (fetchingUser) {
 			return (

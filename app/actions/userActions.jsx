@@ -2,6 +2,7 @@ import isEmpty from 'lodash/isEmpty';
 import isNumber from 'lodash/isNumber';
 
 import DataSource from 'store/dataSource';
+import { UserRoleEnum } from 'enums/userRole';
 
 const dataSource = new DataSource();
 
@@ -13,6 +14,21 @@ export default class UserActions {
 	static SET_NEW_USER = 'SET_NEW_USER';
 	static UPDATE_USER_BY_ID = 'UPDATE_USER_BY_ID';
 	static DELETE_USER = 'DELETE_USER';
+	static FIELD_CHANGE = 'FIELD_CHANGE';
+	static CLEAR_FORM_DATA = 'CLEAR_FORM_DATA';
+
+	static clearFormData = () => {
+		return {
+			type: UserActions.CLEAR_FORM_DATA
+		};
+	};
+
+	static handleFieldChange = fieldData => {
+		return {
+			type: UserActions.FIELD_CHANGE,
+			payload: { ...fieldData }
+		};
+	};
 
 	static getAllUsers = () => {
 		return dispatch => {
@@ -43,7 +59,13 @@ export default class UserActions {
 				});
 			}
 
-			const user = dataSource.getUserById(userId);
+			const currentUser = dataSource.getUserById(userId);
+			const user = {
+				...currentUser,
+				userRole: currentUser.isAdmin
+					? UserRoleEnum.admin
+					: UserRoleEnum.regular
+			};
 
 			dispatch({
 				type: UserActions.GET_USER_BY_ID_COMPLETE,

@@ -13,7 +13,14 @@ class AddMember extends Component {
 		history.goBack();
 	};
 
+	componentDidMount() {
+		const { clearFormData } = this.props;
+		clearFormData();
+	}
+
 	render() {
+		const { handleFieldChange, userFromData } = this.props;
+
 		return (
 			<MobileContainer>
 				<SectionHeader
@@ -24,7 +31,12 @@ class AddMember extends Component {
 					iconName={'close'}
 				/>
 
-				<UserFrom isEditMode={false} onFormSubmit={this.onFormSubmit} />
+				<UserFrom
+					isEditMode={false}
+					onFormSubmit={this.onFormSubmit}
+					onFieldChange={handleFieldChange}
+					userFromData={userFromData}
+				/>
 			</MobileContainer>
 		);
 	}
@@ -35,6 +47,8 @@ const mapStateToProps = state => state;
 export default connect(
 	mapStateToProps,
 	{
-		setNewUser: UserActions.setNewUser
+		setNewUser: UserActions.setNewUser,
+		handleFieldChange: UserActions.handleFieldChange,
+		clearFormData: UserActions.clearFormData
 	}
 )(AddMember);

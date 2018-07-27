@@ -1,9 +1,24 @@
 import UserActions from 'actions/userActions';
+import { userFromData as initialUserFormData } from 'store/configureStore';
 
 const userReducer = (state, action) => {
 	switch (action.type) {
 		case UserActions.GET_ALL_USERS_START: {
 			return { ...state, fetchingAllUsers: true };
+		}
+
+		case UserActions.CLEAR_FORM_DATA: {
+			return { ...state, userFromData: { ...initialUserFormData } };
+		}
+
+		case UserActions.FIELD_CHANGE: {
+			return {
+				...state,
+				userFromData: {
+					...state.userFromData,
+					...action.payload
+				}
+			};
 		}
 
 		case UserActions.GET_ALL_USERS_COMPLETE: {
@@ -22,7 +37,7 @@ const userReducer = (state, action) => {
 			return {
 				...state,
 				fetchingUser: false,
-				user: { ...action.payload }
+				userFromData: { ...action.payload }
 			};
 		}
 

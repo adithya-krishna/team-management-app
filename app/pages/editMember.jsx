@@ -33,7 +33,7 @@ class EditMember extends Component {
 	}
 
 	render() {
-		const { user, fetchingUser } = this.props;
+		const { fetchingUser, userFromData, handleFieldChange } = this.props;
 
 		return (
 			<MobileContainer>
@@ -47,8 +47,9 @@ class EditMember extends Component {
 
 				<UserFrom
 					isEditMode
-					userPrefill={user}
 					fetchingUser={fetchingUser}
+					userFromData={userFromData}
+					onFieldChange={handleFieldChange}
 					onFormSubmit={this.onFormSubmit}
 					onDeleteClick={this.onDeleteUser}
 				/>
@@ -62,6 +63,7 @@ const mapStateToProps = state => state;
 export default connect(
 	mapStateToProps,
 	{
+		handleFieldChange: UserActions.handleFieldChange,
 		getUserById: UserActions.getUserById,
 		updateUserById: UserActions.updateUserById,
 		deleteUser: UserActions.deleteUser
