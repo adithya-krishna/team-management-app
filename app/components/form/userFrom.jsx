@@ -33,6 +33,9 @@ class UserFrom extends Component {
 
 	clearErrorMessage = () => {
 		const { onFieldChange } = this.props;
+		if (this.timerCounter) {
+			clearTimeout(this.timerCounter);
+		}
 		this.timerCounter = setTimeout(() => {
 			onFieldChange({ error: undefined });
 		}, 4000);
