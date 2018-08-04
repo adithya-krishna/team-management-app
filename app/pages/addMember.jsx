@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import MobileContainer from 'components/mobile/container';
+import MobileContent from 'components/mobile/content';
 import SectionHeader from 'components/headers/sectionHeader';
 import UserFrom from 'components/form/userFrom';
 import UserActions from 'actions/userActions';
@@ -22,7 +22,7 @@ class AddMember extends Component {
 		const { handleFieldChange, userFromData } = this.props;
 
 		return (
-			<MobileContainer>
+			<MobileContent>
 				<SectionHeader
 					as={'h2'}
 					title={'Add a team members'}
@@ -37,7 +37,7 @@ class AddMember extends Component {
 					onFieldChange={handleFieldChange}
 					userFromData={userFromData}
 				/>
-			</MobileContainer>
+			</MobileContent>
 		);
 	}
 }

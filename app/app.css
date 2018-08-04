@@ -41,17 +41,18 @@ a.actionIcon .icon {
 	justify-content: center;
 	align-items: center;
 	background-color: #f7f7f7;
+	overflow: hidden;
 }
 
 .helper.rightAligned {
 	text-align: right;
 }
 
-.ui.container.mobileContainer,
+.ui.container.mobileInnerContainer,
 .sectionHeader,
 .userList,
-.mobileContainer .content,
-.mobileContainer .content .section {
+.mobileInnerContainer .content,
+.mobileInnerContainer .content .section {
 	display: flex;
 	flex-direction: column;
 }
@@ -60,32 +61,52 @@ a.actionIcon .icon {
 	flex: 0 0 auto;
 }
 
-.userList {
+.mobileInnerContainer .userList {
 	overflow-y: auto;
 }
 
-.ui.container.mobileContainer {
+.ui.container.mobileOuterContainer {
+	width: 375px;
+	height: 812px;
+	box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1),
+		0 5px 15px rgba(0, 0, 0, 0.07);
+	border-radius: 1rem;
+}
+
+.ui.container.mobileInnerContainer {
 	width: 375px;
 	height: 812px;
 	background-color: white;
-	box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1),
-		0 5px 15px rgba(0, 0, 0, 0.07);
-	border-radius: 5px;
+	border-radius: 1rem;
 	padding: 1rem 1.8rem;
 }
 
-.mobileContainer .content,
-.mobileContainer .content .section {
+.mobileInnerContainer .content,
+.mobileInnerContainer .content .section {
 	flex: 10 0 auto;
 }
 
-.mobileContainer .content .btnFooter {
+.mobileInnerContainer .content .btnFooter {
 	display: flex;
 	justify-content: space-between;
 }
 
-.mobileContainer .content .btnFooter.pushRight {
+.mobileInnerContainer .content .btnFooter.pushRight {
 	justify-content: flex-end;
 }
 
 /*=====  End of custom  ======*/
+
+/* page transitions */
+.fade-enter,
+.fade-exit {
+	position: absolute;
+	filter: blur(5px);
+	z-index: 1;
+}
+
+.fade-enter.fade-enter-active,
+.fade-exit.fade-exit-active {
+	filter: blur(0);
+	transition: all 250ms ease-in;
+}

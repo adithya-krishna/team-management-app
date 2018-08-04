@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import MobileContainer from 'components/mobile/container';
+import MobileContent from 'components/mobile/content';
 import SectionHeader from 'components/headers/sectionHeader';
 import UserFrom from 'components/form/userFrom';
 import UserActions from 'actions/userActions';
@@ -36,7 +36,7 @@ class EditMember extends Component {
 		const { fetchingUser, userFromData, handleFieldChange } = this.props;
 
 		return (
-			<MobileContainer>
+			<MobileContent>
 				<SectionHeader
 					as={'h2'}
 					title={'Edit team members'}
@@ -53,7 +53,7 @@ class EditMember extends Component {
 					onFormSubmit={this.onFormSubmit}
 					onDeleteClick={this.onDeleteUser}
 				/>
-			</MobileContainer>
+			</MobileContent>
 		);
 	}
 }

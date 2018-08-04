@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import MobileContainer from 'components/mobile/container';
+import MobileContent from 'components/mobile/content';
 import SectionHeader from 'components/headers/sectionHeader';
 import UserList from 'components/list';
 import UserActions from 'actions/userActions';
@@ -17,7 +17,7 @@ class HomePage extends Component {
 		const userCount = users.length;
 
 		return (
-			<MobileContainer>
+			<MobileContent>
 				<SectionHeader
 					as={'h2'}
 					title={'Team members'}
@@ -31,7 +31,7 @@ class HomePage extends Component {
 					userCount={userCount}
 					fetchingUsers={fetchingUsers}
 				/>
-			</MobileContainer>
+			</MobileContent>
 		);
 	}
 }

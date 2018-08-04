@@ -1,63 +1,79 @@
-import UserActions from 'actions/userActions';
-import { userFromData as initialUserFormData } from 'store/configureStore';
+import { combineReducers } from 'redux';
 
-const userReducer = (state, action) => {
+import UserActions from 'actions/userActions';
+const BLANK = '';
+import { UserRoleEnum } from 'enums/userRole';
+
+export const initialUserFormData = {
+	firstName: BLANK,
+	lastName: BLANK,
+	email: BLANK,
+	phone: BLANK,
+	userRole: UserRoleEnum.regular
+};
+
+const fetchingAllUsers = (state = null, action) => {
 	switch (action.type) {
 		case UserActions.GET_ALL_USERS_START: {
-			return { ...state, fetchingAllUsers: true };
+			return true;
 		}
-
-		case UserActions.CLEAR_FORM_DATA: {
-			return { ...state, userFromData: { ...initialUserFormData } };
-		}
-
-		case UserActions.FIELD_CHANGE: {
-			return {
-				...state,
-				userFromData: {
-					...state.userFromData,
-					...action.payload
-				}
-			};
-		}
-
 		case UserActions.GET_ALL_USERS_COMPLETE: {
-			return {
-				...state,
-				fetchingAllUsers: false,
-				users: [...action.payload]
-			};
+			return false;
 		}
-
-		case UserActions.GET_USER_BY_ID_START: {
-			return { ...state, fetchingUser: true };
-		}
-
-		case UserActions.GET_USER_BY_ID_COMPLETE: {
-			return {
-				...state,
-				fetchingUser: false,
-				userFromData: { ...action.payload }
-			};
-		}
-
-		case UserActions.SET_NEW_USER: {
-			return {
-				...state,
-				users: [...action.payload]
-			};
-		}
-
-		case UserActions.DELETE_USER: {
-			return {
-				...state,
-				users: [...action.payload]
-			};
-		}
-
-		default:
+		default: {
 			return state;
+		}
 	}
 };
 
-export default userReducer;
+const fetchingUser = (state = null, action) => {
+	switch (action.type) {
+		case UserActions.GET_USER_BY_ID_START: {
+			return true;
+		}
+		case UserActions.GET_USER_BY_ID_COMPLETE: {
+			return false;
+		}
+		default: {
+			return state;
+		}
+	}
+};
+
+const users = (state = [], action) => {
+	switch (action.type) {
+		case UserActions.DELETE_USER:
+		case UserActions.SET_NEW_USER:
+		case UserActions.GET_ALL_USERS_COMPLETE: {
+			return [...action.payload];
+		}
+
+		default: {
+			return state;
+		}
+	}
+};
+
+const userFromData = (state = initialUserFormData, action) => {
+	switch (action.type) {
+		case UserActions.CLEAR_FORM_DATA: {
+			return initialUserFormData;
+		}
+
+		case UserActions.GET_USER_BY_ID_COMPLETE:
+		case UserActions.FIELD_CHANGE: {
+			return { ...state, ...action.payload };
+		}
+
+		default: {
+			return state;
+		}
+	}
+};
+
+export default combineReducers({
+	fetchingAllUsers,
+	fetchingUser,
+	userFromData,
+	users
+});
